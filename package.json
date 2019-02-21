@@ -1,7 +1,9 @@
 {
-  "name": "web",
-  "version": "0.0.0",
-  "private": true,
+  "name": "volca-filetransfer",
+  "version": "0.0.1",
+  "description": "Transfer a list of audio file paths or urls to a Korg Volca Sample.",
+  "author": "Wouter Hisschemöller",
+  "private": false,
   "engines": {
     "node": ">=6.13.1",
     "npm": ">=3.10.10"
