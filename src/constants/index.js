@@ -23,6 +23,7 @@ export const SET_RANGE = 'SET_RANGE';
 export const SET_RANGE_FIRST = 'SET_RANGE_FIRST';
 export const SET_RANGE_LAST = 'SET_RANGE_LAST';
 export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
+export const SET_SLOT = 'SET_SLOT';
 export const START = 'START';
 export const STOP = 'STOP';
 export const TOGGLE_DOUBLE_SPEED = 'TOGGLE_DOUBLE_SPEED';

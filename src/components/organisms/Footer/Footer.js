@@ -15,7 +15,7 @@ class Footer extends React.PureComponent {
   render() {
     return (
       <div className={s.root}>
-        <span className={s.name}>© Wouter Hisschemoller, 2018</span>
+        <span className={s.name}>© Wouter Hisschemoller, 2019</span>
         <a className={s.link} href="http://www.hisschemoller.com">
           www.hisschemoller.com
         </a>

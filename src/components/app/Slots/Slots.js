@@ -5,31 +5,39 @@ import compose from 'recompose/compose';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Slot from '../Slot/Slot';
 import s from './Slots.css';
+import Section from '../../molecules/Section';
 
 class Slots extends React.PureComponent {
   static propTypes = {
     slotIndex: PropTypes.number,
-    slots: PropTypes.arrayOf(PropTypes.number).isRequired,
+    slots: PropTypes.arrayOf(
+      PropTypes.shape({
+        status: PropTypes.number.isRequired,
+        path: PropTypes.string,
+      }).isRequired,
+    ),
   };
 
   static defaultProps = {
     slotIndex: null,
+    slots: null,
   };
 
   render() {
     const { slotIndex, slots } = this.props;
     return (
-      <div className={s.root}>
-        <div className={s.slots}>
-          {slots.map((status, index) => (
+      <Section title="Volca sample slots">
+        <div className={s.root}>
+          {slots.map((slot, index) => (
             <Slot
               key={index.toString()}
-              status={index === slotIndex ? 4 : status}
+              path={slot.path}
+              status={index === slotIndex ? 4 : slot.status}
               index={index}
             />
           ))}
         </div>
-      </div>
+      </Section>
     );
   }
 }

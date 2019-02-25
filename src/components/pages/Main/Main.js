@@ -23,23 +23,21 @@ import compose from 'recompose/compose';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Main.css';
 import Col from '../../atoms/Col';
-import Freesound from '../../app/Freesound';
 import Grid from '../../atoms/Grid';
+import Slots from '../../app/Slots';
 import Sound from '../../app/Sound';
 import Transfer from '../../app/Transfer';
-import Volca from '../../app/Volca';
 
 class Main extends React.PureComponent {
   render() {
     return (
       <Grid>
         <Col>
-          <Freesound />
           <Sound />
           <Transfer />
         </Col>
         <Col>
-          <Volca />
+          <Slots />
         </Col>
       </Grid>
     );

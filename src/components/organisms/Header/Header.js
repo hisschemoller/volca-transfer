@@ -23,10 +23,10 @@ class Header extends React.PureComponent {
               src="img/logo.svg"
               alt="Volca Freesound logo"
               className={s.brandLogo}
-            />Freesound
+            />filetransfer
           </span>
         </Link>
-        <span className={s.version}>v1.01</span>
+        <span className={s.version}>v1.0.0-beta</span>
         <Navigation />
       </div>
     );

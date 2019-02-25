@@ -25,6 +25,7 @@ import {
   SET_RANGE,
   SET_RANGE_FIRST,
   SET_RANGE_LAST,
+  SET_SLOT,
   START,
   STOP,
   TOGGLE_DOUBLE_SPEED,
@@ -68,7 +69,9 @@ export default function sounds(state = initialState, action) {
         duration: 0,
         position: 1,
         slots: state.slots.reduce((accumulator, slot, index) => {
-          accumulator.push(index === state.slotIndex ? 2 : slot);
+          accumulator.push(
+            index === state.slotIndex ? { ...slot, status: 2 } : slot,
+          );
           return accumulator;
         }, []),
         totalDuration: state.totalDuration + state.duration,
@@ -76,7 +79,9 @@ export default function sounds(state = initialState, action) {
     case REQUEST_RANDOM_SOUND:
       return {
         ...state,
-        slotIndex: state.slots.findIndex(slot => slot === 1 || slot === 3),
+        slotIndex: state.slots.findIndex(
+          slot => slot.status === 1 || slot.status === 3,
+        ),
       };
     case RECEIVE_RANDOM_SOUND:
       return {
@@ -122,7 +127,7 @@ export default function sounds(state = initialState, action) {
           ) {
             value = value === 0 ? 1 : 3;
           }
-          accumulator.push(value);
+          accumulator.push({ ...currentValue, status: value });
           return accumulator;
         }, []),
       };
@@ -176,14 +181,50 @@ export default function sounds(state = initialState, action) {
                 value = 0;
             }
           }
-          accumulator.push(value);
+          accumulator.push({ ...currentValue, status: value });
           return accumulator;
         }, []),
       };
+
+    case SET_SLOT: {
+      const { index, filePath } = action;
+      return {
+        ...state,
+        slots: state.slots.reduce((accumulator, currentValue, currentIndex) => {
+          let { status, path } = state.slots[currentIndex];
+          if (index === currentIndex) {
+            path = filePath;
+            switch (status) {
+              case 0:
+                status = 1;
+                break;
+              case 1:
+                status = 0;
+                break;
+              case 2:
+                status = 3;
+                break;
+              case 3:
+                status = 2;
+                break;
+              default:
+                status = 0;
+            }
+          }
+          accumulator.push({ status, path });
+          return accumulator;
+        }, []),
+      };
+    }
+
     case CLEAR_ALL:
       return {
         ...state,
-        slots: new Array(state.slotCount).fill(0, 0, state.slotCount),
+        slots: new Array(state.slotCount).fill(
+          { path: '', status: 0 },
+          0,
+          state.slotCount,
+        ),
       };
     case SELECT_ALL:
       return {
@@ -193,7 +234,11 @@ export default function sounds(state = initialState, action) {
     case INITIALIZE:
       return {
         ...state,
-        slots: new Array(state.slotCount).fill(0, 0, state.slotCount),
+        slots: new Array(state.slotCount).fill(
+          { path: '', status: 0 },
+          0,
+          state.slotCount,
+        ),
       };
     case START:
       return {

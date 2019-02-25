@@ -25,13 +25,13 @@
 
 .brandTxt {
   color: var(--red);
-  font-size: 37px;
+  font-size: 24px;
   font-weight: normal;
 }
 
 .brandLogo {
   margin: 0 8px 4px 8px;
-  width: 27px;
+  width: 21px;
 }
 
 .version {
@@ -50,7 +50,7 @@
   }
 
   .brandTxt {
-    font-size: 42px;
+    font-size: 32px;
   }
 
   .version {
