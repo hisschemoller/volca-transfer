@@ -196,16 +196,12 @@ export default function sounds(state = initialState, action) {
             path = filePath;
             switch (status) {
               case 0:
-                status = 1;
-                break;
               case 1:
-                status = 0;
+                status = path.length ? 1 : 0;
                 break;
               case 2:
-                status = 3;
-                break;
               case 3:
-                status = 2;
+                status = path.length ? 3 : 2;
                 break;
               default:
                 status = 0;
