@@ -1,14 +1,13 @@
-import { REQUEST_SOUND, RECEIVE_SOUND, REJECT_SOUND } from '../constants';
+import { REQUEST_SOUND } from '../constants';
 import playSound, { playEnd } from './playSound.actions';
 import evaluateSounds from './evaluateSounds.actions';
 import { makeActionCreator } from './actionUtils';
 import { getAudioContext } from '../components/app/WebAudio';
 
 const requestSound = makeActionCreator(REQUEST_SOUND, 'query');
-const receiveSound = makeActionCreator(RECEIVE_SOUND, 'json');
 
 function rejectSound(dispatch) {
-  dispatch(playEnd());
+  dispatch(playEnd(false));
   dispatch(evaluateSounds());
 }
 

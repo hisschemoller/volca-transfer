@@ -4,11 +4,11 @@ import evaluateSounds from './evaluateSounds.actions';
 
 const playStart = makeActionCreator(PLAY_START, 'duration');
 const playProgress = makeActionCreator(PLAY_PROGRESS, 'position');
-export const playEnd = makeActionCreator(PLAY_END);
+export const playEnd = makeActionCreator(PLAY_END, 'isSuccess');
 
 function bufferSourceEnded(dispatch, intervalID) {
   clearInterval(intervalID);
-  dispatch(playEnd());
+  dispatch(playEnd(true));
   dispatch(evaluateSounds());
 }
 

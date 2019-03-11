@@ -21,13 +21,17 @@ class Slot extends React.PureComponent {
 
   render() {
     const { dispatch, index, isStarted, path, status } = this.props;
-    const color = status ? '#000000' : '#000000';
+
+    let statusClass = '';
+    if (status === 5) {
+      statusClass = s.error;
+    }
 
     return (
       <div className={s.root}>
         <div className={s.label}>{index}</div>
         <input
-          color={color}
+          className={statusClass}
           name={`input${index}`}
           onInput={e => {
             e.preventDefault();

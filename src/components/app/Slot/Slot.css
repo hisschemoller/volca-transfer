@@ -11,6 +11,8 @@ input {
 
 .label {
   flex-basis: 25px;
+}
 
-  /* text-align: right; */
+.error {
+  color: var(--red);
 }

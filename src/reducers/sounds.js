@@ -5,6 +5,7 @@
  * 2 - sample was loaded in the slot
  * 3 - sample loaded, selected to overwrite
  * 4 - currently transferring sample
+ * 5 - sample was not loaded, an error occurred
  */
 
 import {
@@ -60,19 +61,23 @@ export default function sounds(state = initialState, action) {
       return {
         ...state,
       };
-    case PLAY_END:
+    case PLAY_END: {
+      const { isSuccess } = action;
       return {
         ...state,
         duration: 0,
         position: 1,
         slots: state.slots.reduce((accumulator, slot, index) => {
           accumulator.push(
-            index === state.slotIndex ? { ...slot, status: 2 } : slot,
+            index === state.slotIndex
+              ? { ...slot, status: isSuccess ? 2 : 5 }
+              : slot,
           );
           return accumulator;
         }, []),
         totalDuration: state.totalDuration + state.duration,
       };
+    }
     case REQUEST_SOUND:
       return {
         ...state,
