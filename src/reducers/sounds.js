@@ -16,10 +16,8 @@ import {
   PLAY_END,
   PLAY_PROGRESS,
   PLAY_START,
-  RECEIVE_SOUNDS,
   RECEIVE_RANDOM_SOUND,
-  REJECT_SOUNDS,
-  REQUEST_RANDOM_SOUND,
+  REQUEST_SOUND,
   SELECT_ALL,
   SET_DURATION_MAX,
   SET_RANGE,
@@ -34,7 +32,6 @@ import {
 } from '../constants';
 
 const initialState = {
-  count: 0,
   duration: 0,
   durationMax: 1,
   isDoubleSpeed: false,
@@ -76,7 +73,7 @@ export default function sounds(state = initialState, action) {
         }, []),
         totalDuration: state.totalDuration + state.duration,
       };
-    case REQUEST_RANDOM_SOUND:
+    case REQUEST_SOUND:
       return {
         ...state,
         slotIndex: state.slots.findIndex(
@@ -104,16 +101,6 @@ export default function sounds(state = initialState, action) {
             },
           },
         },
-      };
-    case RECEIVE_SOUNDS:
-      return {
-        ...state,
-        count: action.json.count,
-      };
-    case REJECT_SOUNDS:
-      return {
-        ...state,
-        count: 0,
       };
     case SET_RANGE:
       return {

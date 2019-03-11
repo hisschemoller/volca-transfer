@@ -1,6 +1,0 @@
-{
-  "name": "Freesound",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./Freesound.js"
-}

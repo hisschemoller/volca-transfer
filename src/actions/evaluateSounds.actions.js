@@ -1,4 +1,4 @@
-import fetchRandomSound from './fetchRandomSound.actions';
+import loadSound from './loadSound.actions';
 import { stop } from './volca.actions';
 
 /**
@@ -9,6 +9,7 @@ import { stop } from './volca.actions';
  */
 export default function evaluateSounds() {
   return (dispatch, getState) => {
+
     const state = getState();
     if (
       state.sounds.slots.findIndex(
@@ -17,7 +18,7 @@ export default function evaluateSounds() {
       !state.sounds.isPaused
     ) {
       setTimeout(() => {
-        dispatch(fetchRandomSound());
+        dispatch(loadSound());
       }, 1000);
     } else {
       dispatch(stop());

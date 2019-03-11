@@ -12,7 +12,6 @@ import Section from '../../molecules/Section';
 
 class Transfer extends React.PureComponent {
   static propTypes = {
-    count: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     isPaused: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
@@ -23,14 +22,7 @@ class Transfer extends React.PureComponent {
   static defaultProps = {};
 
   render() {
-    const {
-      count,
-      dispatch,
-      isPaused,
-      isStarted,
-      position,
-      showReceipt,
-    } = this.props;
+    const { dispatch, isPaused, isStarted, position, showReceipt } = this.props;
 
     const sectionStyle = {
       borderBottom: 'none',
@@ -41,15 +33,12 @@ class Transfer extends React.PureComponent {
       btnText = isPaused ? 'Stopping...' : 'Stop';
     }
 
-    const isDisabled = count === 0;
-
     return (
       <Section title="File transfer" style={sectionStyle}>
         <Row hideBottomBorder={!showReceipt}>
           <progress max="1" value={position} className={s.progress} />
           <span>{Math.round(position * 100)}%</span>
           <button
-            disabled={isDisabled}
             onClick={e => {
               e.preventDefault();
               if (isStarted) {
@@ -89,7 +78,6 @@ class Transfer extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    count: state.sounds.count,
     isPaused: state.sounds.isPaused,
     isStarted: state.sounds.isStarted,
     position: state.sounds.position,

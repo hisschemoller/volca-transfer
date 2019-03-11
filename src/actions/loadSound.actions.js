@@ -1,11 +1,16 @@
 import { REQUEST_SOUND, RECEIVE_SOUND, REJECT_SOUND } from '../constants';
-import playSound from './playSound.actions';
+import playSound, { playEnd } from './playSound.actions';
+import evaluateSounds from './evaluateSounds.actions';
 import { makeActionCreator } from './actionUtils';
 import { getAudioContext } from '../components/app/WebAudio';
 
 const requestSound = makeActionCreator(REQUEST_SOUND, 'query');
 const receiveSound = makeActionCreator(RECEIVE_SOUND, 'json');
-const rejectSound = makeActionCreator(REJECT_SOUND, 'error');
+
+function rejectSound(dispatch) {
+  dispatch(playEnd());
+  dispatch(evaluateSounds());
+}
 
 /**
  * Write a text string as unsigned 8 bit integers to a DataView object.
@@ -159,60 +164,67 @@ function doubleSpeed(audioContext, audioBuffer) {
 }
 
 /**
- * Load an MP3 audio file from the provided URL,
- * convert the loaded audio to a Wav file formatted Blob,
- * convert that to a Syro type audio file
- * and start playback (to the connected Volca Sample).
- * @param {*} url
+ * Load an audio file.
  */
-export default function loadSound(url) {
+export default function loadSound() {
   return (dispatch, getState) => {
     dispatch(requestSound());
+    const state = getState();
+    const slotIndex = state.sounds.slots.findIndex(
+      slot => slot.status === 1 || slot.status === 3,
+    );
+    const url = state.sounds.slots[slotIndex].path;
     if (url) {
-      fetch(url).then(response => {
-        response.arrayBuffer().then(arrayBuffer => {
-          const audioContext = getAudioContext();
-          audioContext.decodeAudioData(arrayBuffer, audioBuffer => {
-            const state = getState();
+      fetch(url)
+        .then(response => {
+          if (response.status === 200) {
+            response.arrayBuffer().then(arrayBuffer => {
+              const audioContext = getAudioContext();
+              audioContext.decodeAudioData(arrayBuffer, audioBuffer => {
+                // normalize the sample
+                let audioBuffer2 = audioBuffer;
+                if (state.sounds.isNormalize) {
+                  audioBuffer2 = normalize(audioBuffer);
+                }
 
-            // normalize the sample
-            let audioBuffer2 = audioBuffer;
-            if (state.sounds.isNormalize) {
-              audioBuffer2 = normalize(audioBuffer);
-            }
+                // double speed sample
+                let audioBuffer3 = audioBuffer2;
+                if (state.sounds.isDoubleSpeed) {
+                  audioBuffer3 = doubleSpeed(audioContext, audioBuffer2);
+                }
 
-            // double speed sample
-            let audioBuffer3 = audioBuffer2;
-            if (state.sounds.isDoubleSpeed) {
-              audioBuffer3 = doubleSpeed(audioContext, audioBuffer2);
-            }
-
-            // convert to wav file format
-            const wavBlob = bufferToWav(
-              audioBuffer3,
-              audioBuffer3.numberOfChannels,
-              audioBuffer3.sampleRate,
-            );
-
-            // convert to syro signal
-            window.Syrialize(wavBlob, state.sounds.slotIndex, syroBlob => {
-              const fileReader = new FileReader();
-              fileReader.onload = () => {
-                const syroArrayBuffer = fileReader.result;
-                audioContext.decodeAudioData(
-                  syroArrayBuffer,
-                  syroAudioBuffer => {
-                    dispatch(playSound(audioContext, syroAudioBuffer));
-                  },
+                // convert to wav file format
+                const wavBlob = bufferToWav(
+                  audioBuffer3,
+                  audioBuffer3.numberOfChannels,
+                  audioBuffer3.sampleRate,
                 );
-              };
-              fileReader.readAsArrayBuffer(syroBlob);
+
+                // convert to syro signal
+                window.Syrialize(wavBlob, state.sounds.slotIndex, syroBlob => {
+                  const fileReader = new FileReader();
+                  fileReader.onload = () => {
+                    const syroArrayBuffer = fileReader.result;
+                    audioContext.decodeAudioData(
+                      syroArrayBuffer,
+                      syroAudioBuffer => {
+                        dispatch(playSound(audioContext, syroAudioBuffer));
+                      },
+                    );
+                  };
+                  fileReader.readAsArrayBuffer(syroBlob);
+                });
+              });
             });
-          });
+          } else {
+            rejectSound(dispatch, 'response faulty');
+          }
+        })
+        .catch(() => {
+          rejectSound(dispatch, 'fetch failed');
         });
-      });
     } else {
-      dispatch(rejectSound('no preview url'));
+      dispatch(rejectSound(dispatch, 'no preview url'));
     }
   };
 }
