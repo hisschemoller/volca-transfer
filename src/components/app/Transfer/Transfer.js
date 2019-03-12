@@ -81,7 +81,10 @@ function mapStateToProps(state) {
     isPaused: state.sounds.isPaused,
     isStarted: state.sounds.isStarted,
     position: state.sounds.position,
-    showReceipt: !!state.sounds.sounds.allIds.length && !state.sounds.isStarted,
+    showReceipt:
+      !state.sounds.slots.every(slot => slot.path === '') &&
+      !state.sounds.slots.find(slot => slot.status === 1) &&
+      !state.sounds.slots.find(slot => slot.status === 3),
   };
 }
 

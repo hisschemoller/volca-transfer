@@ -78,13 +78,15 @@ export default function sounds(state = initialState, action) {
         totalDuration: state.totalDuration + state.duration,
       };
     }
-    case REQUEST_SOUND:
+    case REQUEST_SOUND: {
+      const slotIndex = state.slots.findIndex(
+        slot => slot.status === 1 || slot.status === 3,
+      );
       return {
         ...state,
-        slotIndex: state.slots.findIndex(
-          slot => slot.status === 1 || slot.status === 3,
-        ),
+        slotIndex,
       };
+    }
     case RECEIVE_RANDOM_SOUND:
       return {
         ...state,

@@ -9,7 +9,6 @@ import { stop } from './volca.actions';
  */
 export default function evaluateSounds() {
   return (dispatch, getState) => {
-
     const state = getState();
     if (
       state.sounds.slots.findIndex(
