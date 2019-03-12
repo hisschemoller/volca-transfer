@@ -19,26 +19,32 @@ class Slot extends React.PureComponent {
     path: '',
   };
 
-  render() {
-    const { dispatch, index, isStarted, path, status } = this.props;
+  static statusClasses = ['', '', s.success, s.success, s.active, s.error];
 
-    let statusClass = '';
-    if (status === 5) {
-      statusClass = s.error;
+  constructor(props) {
+    super(props);
+    this.onTextChange = this.onTextChange.bind(this);
+  }
+
+  onTextChange(e) {
+    e.preventDefault();
+    const { dispatch, index, isStarted } = this.props;
+    if (!isStarted) {
+      dispatch(setSlot(index, e.target.value));
     }
+  }
+
+  render() {
+    const { index, path, status } = this.props;
 
     return (
       <div className={s.root}>
         <div className={s.label}>{index}</div>
         <input
-          className={statusClass}
+          className={Slot.statusClasses[status]}
           name={`input${index}`}
-          onInput={e => {
-            e.preventDefault();
-            if (!isStarted) {
-              dispatch(setSlot(index, e.target.value));
-            }
-          }}
+          onInput={this.onTextChange}
+          onChange={this.onTextChange}
           type="text"
           value={path}
         />

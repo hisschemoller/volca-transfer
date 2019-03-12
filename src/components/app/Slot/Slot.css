@@ -4,15 +4,21 @@
   display: flex;
   flex-basis: 100%;
 }
-
 input {
   flex-grow: 1;
 }
-
 .label {
   flex-basis: 25px;
 }
-
 .error {
+  background-color: var(--red-lightest);
   color: var(--red);
+}
+.success {
+  background-color: var(--green-lightest);
+  color: var(--green);
+}
+.active {
+  background-color: var(--blue-lightest);
+  color: var(--blue);
 }

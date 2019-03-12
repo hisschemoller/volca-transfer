@@ -21,9 +21,12 @@
   --grey4: #2f3954;
   --blue: #5b7bba;
   --blue-light: #8ab0e2;
+  --blue-lightest: #cde3ff;
   --red: #af351c;
+  --red-lightest: #fcd8d1;
   --green: #2e5139;
   --green-bright: #2d9e51;
+  --green-lightest: #ceffde;
 
   /*
    * Typography
