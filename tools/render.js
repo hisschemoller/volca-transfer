@@ -21,11 +21,7 @@ import runServer from './runServer';
 //   '/page/name',  // => build/public/page/name.html
 //   '/page/name/', // => build/public/page/name/index.html
 // ];
-const routes = [
-  '/',
-  '/about',
-  '/404', // https://help.github.com/articles/creating-a-custom-404-page-for-your-github-pages-site/
-];
+const routes = ['/', '/main', '/help', '/about'];
 
 async function render() {
   const server = await runServer();

@@ -68,6 +68,6 @@ export default function downloadReceipt() {
     }
 
     fileContent = header + fileContent;
-    download('volca-freesound-receipt.txt', fileContent);
+    download('volca-filetransfer-receipt.txt', fileContent);
   };
 }
