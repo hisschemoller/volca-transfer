@@ -35,8 +35,6 @@ class Main extends React.PureComponent {
         <Col>
           <Sound />
           <Transfer />
-        </Col>
-        <Col>
           <Slots />
         </Col>
       </Grid>
