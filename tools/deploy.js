@@ -16,9 +16,9 @@ import run from './run';
 // GitHub Pages
 const remote = {
   name: 'github',
-  url: 'https://github.com/hisschemoller/volca-filetransfer.git',
+  url: 'https://github.com/hisschemoller/volca-transfer.git',
   branch: 'gh-pages',
-  website: 'https://hisschemoller.github.io/volca-filetransfer/',
+  website: 'https://hisschemoller.github.io/volca-transfer/',
   static: true,
 };
 

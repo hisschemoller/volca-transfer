@@ -1,5 +1,5 @@
 {
-  "name": "volca-filetransfer",
+  "name": "volca-transfer",
   "version": "0.0.1",
   "description": "Transfer a list of audio file paths or urls to a Korg Volca Sample.",
   "author": "Wouter Hisschemöller",
