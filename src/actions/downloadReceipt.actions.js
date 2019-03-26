@@ -34,7 +34,7 @@ function download(filename, text) {
 export default function downloadReceipt() {
   return (dispatch, getState) => {
     let fileContent = '';
-    const header = `Sounds downloaded from Freesound.org and transferred to the Korg Volca Sample\n\n\n`;
+    const header = `Audio files transferred to the Korg Volca Sample\n\n\n`;
     const state = getState();
     const reversedIDs = [...state.sounds.sounds.allIds].reverse();
     const newLine = `\r\n`;

@@ -1,5 +1,5 @@
 /**
- * Volca Freesound app.
+ * Volca Transfer app.
  */
 
 import React from 'react';

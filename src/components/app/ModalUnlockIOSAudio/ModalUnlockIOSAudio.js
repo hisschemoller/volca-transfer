@@ -23,8 +23,8 @@ class ModalUnlockIOSAudio extends React.PureComponent {
         }}
       >
         <div className={s.dialog_content}>
-          <h2>Volca Freesound</h2>
-          <p>Click to enter the Volca Freesound app.</p>
+          <h2>Volca Transfer</h2>
+          <p>Click to enter the Volca Transfer app.</p>
           <button
             onClick={() => {
               dispatch(unlockIOSAudio());

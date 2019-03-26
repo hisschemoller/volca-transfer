@@ -1,1 +1,5 @@
 @import '../../variables.css';
+
+.dialog_content {
+  padding: 0;
+}
