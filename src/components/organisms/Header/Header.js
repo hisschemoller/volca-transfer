@@ -21,9 +21,9 @@ class Header extends React.PureComponent {
           <span className={s.brandTxt}>
             Volca<img
               src="img/logo.svg"
-              alt="Volca Freesound logo"
+              alt="Volca Transfer logo"
               className={s.brandLogo}
-            />filetransfer
+            />transfer
           </span>
         </Link>
         <span className={s.version}>v1.0.0-beta</span>
